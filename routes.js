@@ -26,11 +26,11 @@ cocktaliRoutes.get("/addnote", (req, res) => {
   // yes: return something
   // no: return something
 });
-notes.get("/notes", (req, res) => {
-  const notesSql = "SELECT * FROM notes";
+cocktaliRoutes.get("/notes", (req, res) => {
+  const notesSql = "SELECT * FROM notes_table";
   pool.query(notesSql).then(result => {
     res.status("200");
-    res.send(result);
+    res.send(result.rows);
   });
 });
 
