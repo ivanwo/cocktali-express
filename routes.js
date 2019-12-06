@@ -26,18 +26,18 @@ cocktaliRoutes.get("/addnote", (req, res) => {
   // yes: return something
   // no: return something
 });
-notes.get('/notes', (req, res) => {
+notes.get("/notes", (req, res) => {
   const notesSql = "SELECT * FROM notes";
   pool.query(notesSql).then(result => {
-    res.status('2oo');
+    res.status("200");
     res.send(result);
-  })
+  });
 });
 
-notes.post('/notes', (req, res) => {});
+notes.post("/notes", (req, res) => {});
 
-notes.delete('/notes', (req, res) => {});
+notes.delete("/notes", (req, res) => {});
 
-notes.put('/notes', (req, res) => {});
+notes.put("/notes", (req, res) => {});
 
 module.exports = cocktaliRoutes;
