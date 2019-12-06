@@ -30,7 +30,8 @@ cocktaliRoutes.get("/notes", (req, res) => {
   const notesSql = "SELECT * FROM notes_table";
   pool.query(notesSql).then(result => {
     res.status("200");
-    res.send(result.rows);
+    // console.log(result.rows);
+    res.json(result.rows);
   });
 });
 

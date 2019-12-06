@@ -10,7 +10,7 @@ app.use("/", routes);
 const DEFAULT_PORT = 3000;
 
 // this next bit uses either the PORT in the process.env file or the default PORT (on localhost)
-const port = process.env.PORT || DEFAULT_PORT;
+const port = DEFAULT_PORT;
 
 app.listen(port, _ => {
   console.log(`now listening on port ${port}`);
