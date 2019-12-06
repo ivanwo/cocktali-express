@@ -10,4 +10,4 @@ VALUES ('Ivan', 'ivan@ivan.me', 'ivanpassword');
 INSERT INTO cocktali_user (name, email, password)
 VALUES ('Reu', 'reu@reu.me', 'reupassword');
 INSERT INTO cocktali_user (name, email, password)
-VALUES ('Kenny', 'kenny@kenny.me', 'kennypassword');
+VALUES ('Kenney', 'kenney@kenney.me', 'kenneypassword');
