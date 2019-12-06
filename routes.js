@@ -29,15 +29,32 @@ cocktaliRoutes.get("/addnote", (req, res) => {
 cocktaliRoutes.get("/notes", (req, res) => {
   const notesSql = "SELECT * FROM notes_table";
   pool.query(notesSql).then(result => {
-    res.status("200");
-    res.send(result.rows);
+    if (result.rows.length === 0) {
+      res.status(404)
+      res.send('Error: not found')
+    } else {
+      res.status("200");
+      res.send(result.rows);
+    }
   });
 });
 
-notes.post("/notes", (req, res) => {});
+cocktaliRoutes.post("/notes", (req, res) => {
+  const note = req.body;
 
-notes.delete("/notes", (req, res) => {});
+  const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
+VALUES ($1::BOOLEAN, $2::BOOLEAN, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
 
-notes.put("/notes", (req, res) => {});
+  const params = [note.pinned, note.added, note.title, note.content, note.userID];
+
+  pool.query(notesSql, params).then(result => {
+    res.status(201);
+    res.json(result.rows);
+  });
+});
+
+cocktaliRoutes.delete("/notes", (req, res) => {});
+
+cocktaliRoutes.put("/notes", (req, res) => {});
 
 module.exports = cocktaliRoutes;
