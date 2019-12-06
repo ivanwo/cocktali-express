@@ -48,9 +48,12 @@ notes.get('/notes', (req, res) => {
 });
 
 notes.post('/notes', (req, res) => {});
+// TODO post note to notes table
 
 notes.delete('/notes', (req, res) => {});
+// TODO delete a note from the notes table
 
 notes.put('/notes', (req, res) => {});
+// TODO edit note
 
 module.exports = cocktaliRoutes;
