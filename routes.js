@@ -53,7 +53,21 @@ VALUES ($1::BOOLEAN, $2::BOOLEAN, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`
   });
 });
 
-cocktaliRoutes.delete("/notes", (req, res) => {});
+cocktaliRoutes.delete("/notes", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const note = req.body;
+
+  const notesSql = `UPDATE notes_table
+                    SET pinned=$1::BOOLEAN, added=$2::BOOLEAN, title=$3::VARCHAR, content=$4::VARCHAR, userID=$5::INT 
+                    RETURNING*`;
+
+  const params = [note.pinned, note.added, note.title, note.content, note.userID];
+
+  pool.query(notesSql, params).then(result => {
+    res.json(result.rows[0]);
+  })
+});
 
 cocktaliRoutes.put("/notes", (req, res) => {});
 
