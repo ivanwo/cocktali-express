@@ -6,24 +6,11 @@ const pool = require("./connection");
 const cocktaliRoutes = express.Router();
 
 cocktaliRoutes.get("/login", (req, res) => {
-  // If the request has a ?name= parameter, only respond w/ matching students
-  // if (req.query.name) {
-  //   const sql = "SELECT * FROM cocktali_user";
-  //   // const params = ["%" + req.query.name + "%"];
-  //   pool.query(sql, params).then(result => {
-  //     // .json sends response as send Status "Success"
-  //     res.status(200); // ❌❌IVAN DOUBLE CHECK THIS❌❌
-  //     res.send(result.rows);
-  //   });
-  // } else {
-  //   // else respond with ALL students.
   const sql = "SELECT * FROM cocktali_user";
   pool.query(sql).then(result => {
-    // .json sends response as status Failure
-    res.status("200"); //❌❌IVAN DOUBLE CHECK THIS❌❌
+    res.status("200");
     res.send(result.rows);
   });
-  // }
   // TO DO: check if email/ pw from req matched db contents
   // yes: return unique user ID associated
   // no: return null
