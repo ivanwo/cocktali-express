@@ -1,6 +1,7 @@
 CREATE TABLE saved_cocktails
 (
-    cocktailID INT,
+    savedId SERIAL PRIMARY KEY,
+    cocktailId INT,
     userId INT,
     addedDate DATE
 );
