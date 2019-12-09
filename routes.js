@@ -21,13 +21,8 @@ cocktaliRoutes.get("/signup", (req, res) => {
   // yes: if email is not already in DB, return new unique user ID
   // no: return null
 });
-cocktaliRoutes.get("/addnote", (req, res) => {
-  // TO DO: POST note to notes table
-  // yes: return something
-  // no: return something
-});
-cocktaliRoutes.get("/notes", (req, res) => {
-  const notesSql = "SELECT * FROM notes_table";
+cocktaliRoutes.get('/notes', (req, res) => {
+  const notesSql = 'SELECT * FROM notes_table';
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
       res.status(404);

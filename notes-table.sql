@@ -14,4 +14,6 @@ INSERT INTO notes_table
 VALUES
   (TRUE, '1000-01-01', 'Zoink', 'Drink is good', 12);
 
--- The DATE type is used for values with a date part but no time part. MySQL retrieves and displays DATE values in 'YYYY-MM-DD' format. The supported range is '1000-01-01' to '9999-12-31'.
+-- The DATE type is used for values with a date part but no time part. 
+-- MySQL retrieves and displays DATE values in 'YYYY-MM-DD' format. 
+-- The supported range is '1000-01-01' to '9999-12-31'.
