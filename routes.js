@@ -30,15 +30,7 @@ cocktaliRoutes.get('/notes', (req, res) => {
   const notesSql = 'SELECT * FROM notes_table';
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
-      res.status(404); <<
-      <<
-      << < HEAD
-      res.send('Error: not found'); ===
-      ===
-      =
-      res.send("Error: not found"); >>>
-      >>>
-      > 7 f1e641c7e6dba16b937fb46f723aa9dd535cba6
+      res.status(404);
     } else {
       res.status('200');
       res.send(result.rows);
@@ -50,7 +42,7 @@ cocktaliRoutes.post('/notes', (req, res) => {
   const note = req.body;
 
   const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
-VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
+VALUES ($1::BOOLEAN, $2::BOOLEAN, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
 
   const params = [
     note.pinned,
