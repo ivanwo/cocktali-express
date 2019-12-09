@@ -100,7 +100,7 @@ cocktaliRoutes.get("/favs", (req, res) => {
 cocktaliRoutes.post("/favs", (req, res) => {
   const newFav = req.body;
   const sql =
-    "INSERT INTO saved_cocktails VALUES (cocktailID, userId, addedDate) values ($1::INT, $2::INT, $3::DATE);";
+    "INSERT INTO saved_cocktails (cocktailID, userId, addedDate) VALUES ($1::INT, $2::INT, $3::DATE);";
   const params = [newFav.cocktailId, newFav.userId, "2019-12-09"];
   //
   //  TO DO: IMPLEMENT FRESH DATE THERE ^^^^^^^^^
