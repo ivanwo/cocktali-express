@@ -30,12 +30,15 @@ cocktaliRoutes.get('/notes', (req, res) => {
   const notesSql = 'SELECT * FROM notes_table';
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
-      res.status(404);
-<<<<<<< HEAD
-      res.send('Error: not found');
-=======
-      res.send("Error: not found");
->>>>>>> 7f1e641c7e6dba16b937fb46f723aa9dd535cba6
+      res.status(404); <<
+      <<
+      << < HEAD
+      res.send('Error: not found'); ===
+      ===
+      =
+      res.send("Error: not found"); >>>
+      >>>
+      > 7 f1e641c7e6dba16b937fb46f723aa9dd535cba6
     } else {
       res.status('200');
       res.send(result.rows);
@@ -75,7 +78,6 @@ cocktaliRoutes.delete('/notes/:id', (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 cocktaliRoutes.put('/notes/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const note = req.body;
@@ -99,6 +101,3 @@ WHERE ID = $6::INT RETURNING *`;
 });
 
 module.exports = cocktaliRoutes;
-=======
-module.exports = cocktaliRoutes;
->>>>>>> 7f1e641c7e6dba16b937fb46f723aa9dd535cba6
