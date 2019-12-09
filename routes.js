@@ -31,7 +31,11 @@ cocktaliRoutes.get('/notes', (req, res) => {
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
       res.status(404);
+<<<<<<< HEAD
       res.send('Error: not found');
+=======
+      res.send("Error: not found");
+>>>>>>> 7f1e641c7e6dba16b937fb46f723aa9dd535cba6
     } else {
       res.status('200');
       res.send(result.rows);
@@ -43,7 +47,7 @@ cocktaliRoutes.post('/notes', (req, res) => {
   const note = req.body;
 
   const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
-VALUES ($1::BOOLEAN, $2::BOOLEAN, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
+VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
 
   const params = [
     note.pinned,
@@ -71,6 +75,7 @@ cocktaliRoutes.delete('/notes/:id', (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 cocktaliRoutes.put('/notes/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const note = req.body;
@@ -94,3 +99,6 @@ WHERE ID = $6::INT RETURNING *`;
 });
 
 module.exports = cocktaliRoutes;
+=======
+module.exports = cocktaliRoutes;
+>>>>>>> 7f1e641c7e6dba16b937fb46f723aa9dd535cba6
