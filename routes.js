@@ -73,12 +73,18 @@ cocktaliRoutes.delete("/notes/:id", (req, res) => {
 
 cocktaliRoutes.put("/notes", (req, res) => {
   const id = parseInt(req.params.id);
-  const student = req.body;
+  const note = req.body;
 
   const sql = `UPDATE notes_table
                SET id=$1::INT, pinned=$2::BOOLEAN, added=$3::BOOLEAN, tilte=$4::BOOLEAN, content=$5::INT
                WHERE userID = $6::INT RETURNING *`;
-  const params = [student.name, student.present, student.birth_year, id];
+  const params = [
+    note.pinned,
+    note.added,
+    note.title,
+    note.content,
+    note.userID
+  ];
   pool.query(sql, params).then(result => {
     res.json(result.rows[0]);
   });
