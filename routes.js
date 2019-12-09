@@ -21,8 +21,8 @@ cocktaliRoutes.get("/signup", (req, res) => {
   // yes: if email is not already in DB, return new unique user ID
   // no: return null
 });
-cocktaliRoutes.get('/notes', (req, res) => {
-  const notesSql = 'SELECT * FROM notes_table';
+cocktaliRoutes.get("/notes", (req, res) => {
+  const notesSql = "SELECT * FROM notes_table";
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
       res.status(404);
@@ -84,6 +84,30 @@ WHERE ID = $6::INT RETURNING *`;
 
   pool.query(notesSql, params).then(result => {
     res.json(result.rows);
+  });
+});
+
+//
+// FAVORITES SECTION FOR SERVING AND ADDING FAVS
+//
+cocktaliRoutes.get("/favs", (req, res) => {
+  const sql = "SELECT * FROM saved_cocktails";
+  pool.query(sql).then(result => {
+    res.status(200);
+    res.json(result.rows);
+  });
+});
+cocktaliRoutes.post("/favs", (req, res) => {
+  const newFav = req.body;
+  const sql =
+    "INSERT INTO saved_cocktails VALUES (cocktailID, userId, addedDate) values ($1::INT, $2::INT, $3::DATE);";
+  const params = [newFav.cocktailId, newFav.userId, "2019-12-09"];
+  //
+  //  TO DO: IMPLEMENT FRESH DATE THERE ^^^^^^^^^
+  //
+  pool.query(sql, params).then(result => {
+    res.status(201);
+    res.json();
   });
 });
 
