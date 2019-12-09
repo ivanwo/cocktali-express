@@ -30,8 +30,8 @@ cocktaliRoutes.get("/notes", (req, res) => {
   const notesSql = "SELECT * FROM notes_table";
   pool.query(notesSql).then(result => {
     if (result.rows.length === 0) {
-      res.status(404)
-      res.send('Error: not found')
+      res.status(404);
+      res.send("Error: not found");
     } else {
       res.status("200");
       res.send(result.rows);
@@ -43,9 +43,15 @@ cocktaliRoutes.post("/notes", (req, res) => {
   const note = req.body;
 
   const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
-VALUES ($1::BOOLEAN, $2::BOOLEAN, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
+VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
 
-  const params = [note.pinned, note.added, note.title, note.content, note.userID];
+  const params = [
+    note.pinned,
+    note.added,
+    note.title,
+    note.content,
+    note.userID
+  ];
 
   pool.query(notesSql, params).then(result => {
     res.status(201);
@@ -62,9 +68,20 @@ cocktaliRoutes.delete("/notes/:id", (req, res) => {
 
   pool.query(notesSql, params).then(result => {
     res.sendStatus(204);
-  })
+  });
 });
 
-cocktaliRoutes.put("/notes", (req, res) => {});
+cocktaliRoutes.put("/notes", (req, res) => {
+  const id = parseInt(req.params.id);
+  const student = req.body;
+
+  const sql = `UPDATE notes_table
+               SET id=$1::INT, pinned=$2::BOOLEAN, added=$3::BOOLEAN, tilte=$4::BOOLEAN, content=$5::INT
+               WHERE userID = $6::INT RETURNING *`;
+  const params = [student.name, student.present, student.birth_year, id];
+  pool.query(sql, params).then(result => {
+    res.json(result.rows[0]);
+  });
+});
 
 module.exports = cocktaliRoutes;
