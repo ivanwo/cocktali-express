@@ -130,12 +130,12 @@ cocktaliRoutes.get("/favs", (req, res) => {
   });
 });
 cocktaliRoutes.post("/favs", (req, res) => {
-  console.log("awergwae");
+  // console.log("awergwae");
   const newFav = req.body;
   const sql =
     "INSERT INTO saved_cocktails (cocktailID, userId, addedDate) VALUES ($1::INT, $2::INT, $3::DATE);";
   const params = [newFav.cocktailId, newFav.userId, "2019-12-09"];
-  console.log(newFav.cocktailId);
+  // console.log(newFav.cocktailId);
   //
   //  TO DO: IMPLEMENT FRESH DATE THERE ^^^^^^^^^
   //
@@ -146,7 +146,7 @@ cocktaliRoutes.post("/favs", (req, res) => {
 });
 cocktaliRoutes.delete("/favs/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  console.log(id);
+  // console.log(id);
   sql = "delete from saved_cocktails where savedId = $1::int";
   params = [id];
   pool.query(sql, params).then(result => {
