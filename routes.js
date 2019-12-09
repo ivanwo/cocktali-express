@@ -31,7 +31,9 @@ cocktaliRoutes.get('/notes', (req, res) => {
       // if there are notes, we receive them
       // if not, then we receive error
       res.status(404);
-      res.json({ error: `404 not found` });
+      res.json({
+        error: `404 not found`
+      });
     } else {
       res.status('200');
       res.send(result.rows);
@@ -50,7 +52,9 @@ cocktaliRoutes.get('/notes/:id', (req, res) => {
     if (result.rows.length === 0) {
       // Response status: 404
       res.status(404);
-      res.json({ error: `ID ${id} not found` });
+      res.json({
+        error: `ID ${id} not found`
+      });
     } else {
       res.json(result.rows);
     }
@@ -70,6 +74,9 @@ cocktaliRoutes.post('/notes', (req, res) => {
   console.log(`Today is ${month} - ${day} - ${year}`); // quick test
 
   const note = req.body;
+  console.log(note);
+  if (note.pinned === "")
+    note.pinned = false;
 
   const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
 VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
@@ -86,7 +93,7 @@ VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
 cocktaliRoutes.delete('/notes/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
-  const notesSql = `DELETE FROM notes_table WHERE id = $6::INT`;
+  const notesSql = `DELETE FROM notes_table WHERE id = $1::INT`;
 
   const params = [id];
 
