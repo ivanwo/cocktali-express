@@ -6,20 +6,38 @@ const pool = require("./connection");
 const cocktaliRoutes = express.Router();
 const notes = express.Router();
 
-cocktaliRoutes.get("/login", (req, res) => {
+cocktaliRoutes.post("/login", (req, res) => {
+  let info = req.body;
   const sql = "SELECT * FROM cocktali_user";
   pool.query(sql).then(result => {
-    res.status("200");
-    res.send(result.rows);
+    for (let user of result.rows) {
+      if (user.email === info.email && user.password === info.password) {
+        res.status("200");
+        res.send([{ id: user.id, name: user.name }]);
+      }
+    }
+    res.status(404);
+    res.send("login unsuccessful");
   });
-  // TO DO: check if email/ pw from req matched db contents
-  // yes: return unique user ID associated
-  // no: return null
 });
-cocktaliRoutes.get("/signup", (req, res) => {
-  // TO DO: send name, email, password
-  // yes: if email is not already in DB, return new unique user ID
-  // no: return null
+cocktaliRoutes.post("/signup", (req, res) => {
+  let info = req.body;
+  let sql = "SELECT * FROM cocktali_user";
+  pool.query(sql).then(results => {
+    for (let user of results.rows) {
+      if (info.email === user.email) {
+        res.status(401);
+        res.send("email already has account");
+      }
+    }
+    sql =
+      "INSERT INTO cocktali_user (name, email, password) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR);";
+    params = [info.name, info.email, info.password];
+    pool.query(sql, params).then(results => {
+      res.status(201);
+      res.send(":)");
+    });
+  });
 });
 
 // get entire notes database
@@ -75,8 +93,7 @@ cocktaliRoutes.post("/notes", (req, res) => {
 
   const note = req.body;
   console.log(note);
-  if (note.pinned === "")
-    note.pinned = false;
+  if (note.pinned === "") note.pinned = false;
 
   const notesSql = `INSERT INTO notes_table (pinned, added, title, content, userID) 
 VALUES ($1::BOOLEAN, $2::DATE, $3::VARCHAR, $4::VARCHAR, $5::INT) RETURNING*`;
