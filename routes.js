@@ -12,12 +12,12 @@ cocktaliRoutes.post("/login", (req, res) => {
   pool.query(sql).then(result => {
     for (let user of result.rows) {
       if (user.email === info.email && user.password === info.password) {
-        res.status("200");
+        res.status(200);
         res.send([{ id: user.id, name: user.name }]);
       }
     }
-    res.status(404);
-    res.send("login unsuccessful");
+    res.status(200);
+    res.send();
   });
 });
 cocktaliRoutes.post("/signup", (req, res) => {
