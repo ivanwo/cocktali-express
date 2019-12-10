@@ -3,7 +3,7 @@ CREATE TABLE notes_table
 (
   id SERIAL PRIMARY KEY,
   pinned BOOLEAN,
-  added DATE(8),
+  added DATE,
   title VARCHAR(255),
   content VARCHAR(255),
   userID INT
