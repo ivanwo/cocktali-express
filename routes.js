@@ -25,17 +25,20 @@ cocktaliRoutes.post("/signup", (req, res) => {
   let sql = "SELECT * FROM cocktali_user";
   pool.query(sql).then(results => {
     for (let user of results.rows) {
-      if (info.email === user.email) {
-        res.status(401);
-        res.send("email already has account");
+      if (info.newUser.email === user.email) {
+        console.log(0);
+        res.status(200);
+        res.send();
+        return;
       }
     }
     sql =
       "INSERT INTO cocktali_user (name, email, password) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR);";
-    params = [info.name, info.email, info.password];
+    params = [info.newUser.name, info.newUser.email, info.newUser.password];
+    console.log(1);
     pool.query(sql, params).then(results => {
       res.status(201);
-      res.send(":)");
+      res.send();
     });
   });
 });
@@ -146,9 +149,13 @@ WHERE ID = $6::INT RETURNING *`;
 //
 // FAVORITES SECTION FOR SERVING AND ADDING FAVS
 //
-cocktaliRoutes.get("/favs", (req, res) => {
-  const sql = "SELECT * FROM saved_cocktails";
-  pool.query(sql).then(result => {
+cocktaliRoutes.get("/favs/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  // let userId = req.body;
+  console.log(id);
+  const sql = "SELECT * FROM saved_cocktails WHERE userID=$1::INT";
+  params = [id];
+  pool.query(sql, params).then(result => {
     res.status(200);
     res.json(result.rows);
   });
@@ -156,6 +163,7 @@ cocktaliRoutes.get("/favs", (req, res) => {
 cocktaliRoutes.post("/favs", (req, res) => {
   // console.log("awergwae");
   const newFav = req.body;
+  // console.log(newFav);
   const sql =
     "INSERT INTO saved_cocktails (cocktailID, userId, addedDate) VALUES ($1::INT, $2::INT, $3::DATE);";
   const params = [newFav.cocktailId, newFav.userId, "2019-12-09"];
