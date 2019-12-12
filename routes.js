@@ -132,7 +132,7 @@ cocktaliRoutes.put("/notes/:id", (req, res) => {
 SET pinned = $1::BOOLEAN, added = $2::DATE, title = $3::VARCHAR, content = $4::VARCHAR, userID = $5::INT
 WHERE ID = $6::INT RETURNING *`;
 
-  const params = [note.pinned, date, note.title, note.content, note.userID, id];
+  const params = [note.pinned, date, note.title, note.content, note.userId, id];
 
   pool.query(notesSql, params).then(result => {
     res.json(result.rows);
